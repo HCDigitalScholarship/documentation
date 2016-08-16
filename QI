@@ -1,0 +1,49 @@
+server {
+    listen 80;
+    server_name pennstreaty.haverford.edu;
+    root /usr/share/nginx/html;
+
+    location /static/admin {
+        alias /usr/local/lib/python-virtualenv/QI/lib/python2.7/site-packages/django/contrib/admin/static/admin;
+    }
+
+    location /static/ {
+        alias /srv/QI/static_media/;
+    }
+
+
+# Mediawiki Config
+    location /transcriber {
+        try_files $uri /transcriber/index.php?$args;
+        }
+
+#Omeka config
+    location /qi/admin {
+        try_files $uri /qi/admin/index.php?$args;
+        }
+
+    location /qi {
+        try_files $uri /qi/index.php?$args;
+        }
+
+    location /themes {
+        alias /usr/share/nginx/html/qi/themes;
+        }
+
+    location / {
+        include /srv/QI/uwsgi_params;
+        uwsgi_pass unix:/run/uwsgi/app/QI/QI.socket;
+    }
+
+# php-fpm config
+# Edit /etc/php5/fpm/php.ini and set cgi.fix_pathinfo = 0
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_intercept_errors on;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+
+}
