@@ -5,7 +5,7 @@
 Provide a brief summary of the project.
 ####Table of Contents
 ####Conceptual Model [if applicable]
-Provide a brief explanation of the various components of the project and project site (if applicable) and explain how they are related. FLow charts or diagrams may be helpful.
+Provide a brief explanation of the various components of the project and project site (if applicable) and explain how they are related. Flow charts or diagrams may be helpful.
 ####Related Resources [if applicable]
 Provide a list of links and descriptions to other key resources associated with the project. If applicable, provide a link to the live project site.
 ####Requirements
