@@ -14,4 +14,3 @@ Provide the names of the hardware, software, libraries, tools, etc. that are nec
 ####Examples [if applicable]
 ####Credits
 ####Release History
-####Copyright and License
