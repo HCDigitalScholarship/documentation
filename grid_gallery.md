@@ -1,4 +1,4 @@
-How to add a tile to the Digital Scholarship grid gallery
+##How to add a tile to the Digital Scholarship grid gallery
 
 Go to: http://library.haverford.edu/login and log in 
 
