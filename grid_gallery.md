@@ -6,11 +6,11 @@ In the Dashboard, click on File Manager
 
 Choose file and upload the image that you want to use for the tile.  You’ll see it display in the file manager.  
 Click on the file and you’ll see an little gear and Properties. 
-Under the file’s Properties there are several fields that are relevant to the grid
+Under the file’s Properties there are several fields that are relevant to the grid.
 
-Title: This is the text that will display when users hover over the tile.
-Description: This will appear underneath the title and should not be more than one or two sentences.
-Tags:  These are the terms that Grid Gallery will  use for filter buttons.  Be sure to use existing terms and to spell them correctly or your tile won’t display.   
+**Title:** This is the text that will display when users hover over the tile.<br>
+**Description:** This will appear underneath the title and should not be more than one or two sentences.<br>
+**Tags:**  These are the terms that Grid Gallery will  use for filter buttons.  Be sure to use existing terms and to spell them correctly or your tile won’t display.   
 
 	--Main page filters
 	Faculty Projects
@@ -33,7 +33,7 @@ Tags:  These are the terms that Grid Gallery will  use for filter buttons.  Be s
 	Mapping & GIS
 	Web Development
 
-Link: This is where you add the URL for your project.  
+**Link:** This is where you add the URL for your project.  
 
 Next, go back to the File Manager and click on the image.  Instead of clicking on Properties, click on Sets.  You need to add the image to  “DS Services + Projects” for the image to appear in the gallery. 
 
