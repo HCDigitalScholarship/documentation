@@ -93,29 +93,28 @@ Sockets: uWSGI can create multiple types of sockets, and we will use two of them
     $ pip install uwsgi
 
 Create a new file /etc/uwsgi/apps-available/project_name.ini and paste in the following contents:
-`
-[uwsgi]
 
-# Environmental settings: 
-uid = www-data
-gid = www-data
-#socket = /run/uwsgi/app/duchemin/duchemin.socket
-`
+    [uwsgi]
 
+    #Environmental settings: 
+    uid = www-data
+    gid = www-data
+    #socket = /run/uwsgi/app/duchemin/duchemin.socket
+    
 First we are setting the user and group that can access the file socket, and specifying the location of the file socket. We specify the /run/uwsgi/app folder because we know the uWSGI service has permission to access it. The file socket location line should be commented out initially for reasons that will be explained in a moment.
 
-`# For testing: curl -L http://localhost:5000
-socket = localhost:5000
-protocol = http
-`
+    # For testing: curl -L http://localhost:5000
+    socket = localhost:5000
+    protocol = http
+
 These lines are only there for testing purposes, and they create the HTTP socket. They will eventually be commented out. We can test the socket by requesting HTML using the "curl" command from the command line. 
-`
-# Application settings
-plugin = python
-chdir = /srv/DuChemin
-#virtualenv = /usr/local/lib/python-virtualenv/ticha-django
-module=duchemin.wsgi:application
-`
+
+    # Application settings
+    plugin = python
+    chdir = /srv/DuChemin
+    #virtualenv = /usr/local/lib/python-virtualenv/ticha-django
+    module=duchemin.wsgi:application
+
 These lines contain specifics for the application server hooking into the app.
 `plugin` specifies the type of application. In most cases, e.g. a Django app, this will be `python`, but it could also be ruby, python3, mongoDB, PHP, and so on. See the uWSGI docs for all of the available plugins.
 
@@ -125,9 +124,9 @@ These lines contain specifics for the application server hooking into the app.
 
 `module` defines the application for uWSGI. The name of the application should be identical to to the name specified in the `WSGI_APPLICATION` line of `settings.py`
 
-`# Performance tuning
-processes = 4
-threads = 2`
+    # Performance tuning
+    processes = 4
+    threads = 2`
 
 The python plugin by default does not have threads enabled, so we enable threading support here. We can adjust these lines based on performance once the project is deployed.
 
