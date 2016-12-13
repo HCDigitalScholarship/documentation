@@ -158,6 +158,57 @@ You will probably be prompted for your user's password. Enter it to confirm that
 At this point, try visiting the IP or domain of your project. You should see the Nginx welcome screen.  Congratulations! To start nginx, you can also enter `$ sudo /etc/init.d/nginx start`
 
 ### Configure nginx
+Create and open a new config file (Nginx config files do not have extensions)
+
+    $ sudo vi /etc/nginx/sites-available/projectname 
+
+We'll start by creating a server block enclosed in curly braces:
+
+    server {
+        listen 80;
+        server_name projectname.haverford.edu
+        root /srv/projectRoot
+        
+     # ...location rules go here...
+     
+     }
+     
+The `listen` line opens port 80 for HTTP requests. In some cases, we'll also listen on port 443 for HTTPS requests.
+
+`server_name` accepts requests with this value as the root of the URL. This could also be the IP address for a Droplet. In any case, it does NOT need to have a DNS record yet.
+
+`root` refers to the root folder of the project. For a Django project, this is the folder containing `manage.py`.
+
+Now we'll add location rules as needed. Location rules interpret HTTP requests for URLs and routes those requests to the appropriate folders on the file system of the web server. 
+
+Location rules are marked by `location /path { }` in which a path in the request URL is either routed to a directory on the server, or a request for a specified filetype is sent to the application that can interpret it. For example, to serve PHP, we'll use the following location rule (this also requires that the `php5-fpm` is installed):
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_intercept_errors on;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+    }
+
+To serve the index page of a Django project, use this block:
+
+    location / {
+                include /etc/nginx/uwsgi_params;
+                uwsgi_pass unix:/path/to/uwsgi/socket.socket;
+        }
+
+`uwsgi_pass` must match the path to the Unix file socket specified in the uWSGI configuration file for the project.
+
+If the images for our project are stored in another folder outside the project, we can use something like:
+
+    location /images {
+        root /var/www/html/images;
+        }
+
+
+
 Open up the default virtual host file.
 
     $ sudo vi /etc/nginx/sites-available/default
