@@ -80,6 +80,73 @@ The URL above comes from the "Clone or download" button on Github. You will then
 
     $ sudo pip install -r requirements.txt
 
+Test the app to make sure all requirements are installed by running 
+
+    $ python manage.py runserver
+
+If you don't get any errors, then the app is properly configured and you can move on to the next step!
+
+## Step X: Install uWsgi
+What is an application server and why are we using it? 
+Sockets: uWSGI can create multiple types of sockets, and we will use two of them here--HTTP and Unix. We'll start with an HTTP socket so that we can reqeust HTML from the app without having to also configure a web server. Once we are sure that uWSGI is properly configured, we will switch to a Unix file socket for performance and security reasons.
+
+    $ pip install uwsgi
+
+Create a new file /etc/uwsgi/apps-available/project_name.ini and paste in the following contents:
+
+`[uwsgi]
+
+# Environmental settings: 
+uid = www-data
+gid = www-data
+#socket = /run/uwsgi/app/duchemin/duchemin.socket`
+
+First we are setting the user and group that can access the file socket, and specifying the location of the file socket. We specify the /run/uwsgi/app folder because we know the uWSGI service has permission to access it. The file socket location line should be commented out initially for reasons that will be explained in a moment.
+
+`# For testing: curl -L http://localhost:5000
+socket = localhost:5000
+protocol = http`
+
+These lines are only there for testing purposes, and they create the HTTP socket. They will eventually be commented out. We can test the socket by requesting HTML using the "curl" command from the command line. 
+
+`# Application settings
+plugin = python
+chdir = /srv/DuChemin
+#virtualenv = /usr/local/lib/python-virtualenv/ticha-django
+module=duchemin.wsgi:application`
+
+These lines contain specifics for the application server hooking into the app.
+`plugin` specifies the type of application. In most cases, e.g. a Django app, this will be `python`, but it could also be ruby, python3, mongoDB, PHP, and so on. See the uWSGI docs for all of the available plugins.
+
+`chdir` specifies the project root directory. For a Flask or Django project, this is the folder that contains `manage.py`
+
+`virtualenv` specifies the location of the virtual environment.
+
+`module` defines the application for uWSGI. The name of the application should be identical to to the name specified in the `WSGI_APPLICATION` line of `settings.py`
+
+`# Performance tuning
+processes = 4
+threads = 2`
+
+The python plugin by default does not have threads enabled, so we enable threading support here. We can adjust these lines based on performance once the project is deployed.
+
+Save and quit.
+
+Create a symbolic link in `/apps-enabled` to the `.ini` file in `/apps-available` to activate the configuration:
+    `$ ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini`
+    
+Restart the service
+    $ sudo service uwsgi restart
+    
+Now let's test the socket to see if we can get an HTML response:
+    $ curl -L http://localhost:5000
+
+The `-L` option follows redirects, which is necessary if your project redirects from the index page.
+
+If you get an HTML response, you've successfully configured uWSGI! If you get an error or no response, check the logs at `/var/log/uwsgi/app/nameofapp.log`
+
+Once you've successfully configured uWSGI, comment out the two lines related to the HTTP socket and uncomment the line for the Unix file socket. Save, quit, and restart uWSGI.
+
 ## Step X: Install Nginx ([source](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-14-04-lts)) 
 
 Begin by typing:
@@ -251,6 +318,3 @@ Restart php-fpm:
 
 ## Step X: Set STATIC_ROOT and collectstatic
 
-## Step X: Install uWsgi
-
-    $ pip install uwsgi
