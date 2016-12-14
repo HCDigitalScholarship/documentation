@@ -88,6 +88,7 @@ If you don't get any errors, then the app is properly configured and you can mov
 
 ## Step X: Install uWsgi
 What is an application server and why are we using it? 
+
 Sockets: uWSGI can create multiple types of sockets, and we will use two of them here--HTTP and Unix. We'll start with an HTTP socket so that we can reqeust HTML from the app without having to also configure a web server. Once we are sure that uWSGI is properly configured, we will switch to a Unix file socket for performance and security reasons.
 
     $ pip install uwsgi
@@ -133,12 +134,15 @@ The python plugin by default does not have threads enabled, so we enable threadi
 Save and quit.
 
 Create a symbolic link in `/apps-enabled` to the `.ini` file in `/apps-available` to activate the configuration:
-    `$ ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini`
-    
+
+    $ ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini
+        
 Restart the service
+    
     $ sudo service uwsgi restart
     
 Now let's test the socket to see if we can get an HTML response:
+    
     $ curl -L http://localhost:5000
 
 The `-L` option follows redirects, which is necessary if your project redirects from the index page.
@@ -169,7 +173,7 @@ We'll start by creating a server block enclosed in curly braces:
         server_name projectname.haverford.edu
         root /srv/projectRoot
         
-     # ...location rules go here...
+     # ...location directives go here...
      
      }
      
@@ -179,9 +183,9 @@ The `listen` line opens port 80 for HTTP requests. In some cases, we'll also lis
 
 `root` refers to the root folder of the project. For a Django project, this is the folder containing `manage.py`.
 
-Now we'll add location rules as needed. Location rules interpret HTTP requests for URLs and routes those requests to the appropriate folders on the file system of the web server. 
+Now we'll add location directives as needed. Location directives interpret HTTP requests for URLs and routes those requests to the appropriate folders on the file system of the web server. 
 
-Location rules are marked by `location /path { }` in which a path in the request URL is either routed to a directory on the server, or a request for a specified filetype is sent to the application that can interpret it. For example, to serve PHP, we'll use the following location rule (this also requires that the `php5-fpm` is installed):
+Location directives are marked by `location /path { }` in which a path in the request URL is either routed to a directory on the server, or a request for a specified filetype is sent to the application that can interpret it. For example, to serve PHP, we'll use the following location rule (this also requires that the `php5-fpm` is installed, which you can do by running `sudo apt-get install php5-fpm`). Just copy and paste this block into your config file:
 
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -191,6 +195,12 @@ Location rules are marked by `location /path { }` in which a path in the request
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         }
     }
+
+`fastcgi_params` defines parameters that FastCGI will pass to the PHP interpreter from the client request.  
+
+When `fastcgi_intercept_errors` is set to `on`, it passes Nginx errors on to the application so that a specific error page can be displayed. For example, Omeka sites already have 404 and 500 error pages, so those pages will be displayed instead of Nginx's default error pages.
+
+`fastcgi_pass` is specifying the location of the socket to the PHP interpreter. If you've installed `php5-fpm`, it will create that socket in `/var/run/`. 
 
 To serve the index page of a Django project, use this block:
 
@@ -199,80 +209,51 @@ To serve the index page of a Django project, use this block:
                 uwsgi_pass unix:/path/to/uwsgi/socket.socket;
         }
 
-`uwsgi_pass` must match the path to the Unix file socket specified in the uWSGI configuration file for the project.
+The `uwsgi_params` defines parameters that uWSGI will use to complete a request handled by Nginx. It makes information from the client request available to the application server such as the protocol of a request (e.g. HTTP) or the method of the request (e.g. GET, POST, etc.). This file is included out of the box when you install Nginx, so unless it's a very unique case we will almost always point to this default version.
+
+`uwsgi_pass` must match the path to the Unix file socket specified in the uWSGI configuration file for the project. `/path/to/uwsgi/socket.socket` will usually look something like `/run/uwsgi/app/ticha-django-site/ticha-django-site.socket`
 
 If the images for our project are stored in another folder outside the project, we can use something like:
+
+    location /images {
+        alias /var/www/html/images;
+        }
+
+`root` will append the path to the specified request, whereas `alias` will replace the request with the specified path. For example, the above directive will route a request for `project.haverford.edu/images` to `/var/www/html/images` directory on the server. If we wrote the same directive with `root` instead, like this:
 
     location /images {
         root /var/www/html/images;
         }
 
+Then the path would be `/var/www/html/images/images`.
 
+If you are using `alias`, remember to stay consistent in the usage of slashes ("`/`"). If the request ends with a slash (e.g. "`/images/`") then the path must also end with a slash (e.g. "`alias /var/www/html/images/`"). Otherwise, a request may produce a path that is missing a slash! A good way to test your location directives is through the "Inspect" feature of your browser along with the Nginx logs (`/var/log/nginx/error.log` and `/var/log/nginx/access.log`) to see if the request matches the path you want.
 
-Open up the default virtual host file.
+Another useful directive is `try_files`, which enables Nginx to look for files of the same type in a specified folder:
 
-    $ sudo vi /etc/nginx/sites-available/default
-
-Select all and delete (actually move to buffer)
-
-    :%d
-
-Copy this [file](https://github.com/HCDigitalScholarship/Documentation/blob/master/QI). Then press `i` and paste (command-v).  
-
-      server {
-    listen 80;
-    server_name pennstreaty.haverford.edu;
-    root /usr/share/nginx/html;
-
-    location /static/admin {
-        alias /usr/local/lib/python-virtualenv/QI/lib/python2.7/site-packages/django/contrib/admin/static/admin;
+    location ~ \.(mp3|mp4) {
+       root /www/media;
     }
 
-    location /static/ {
-        alias /srv/QI/static_media/;
-    }
+Generally speaking, `location` directives like this give us lots of control over the structure of our URLs.
 
+Once you've written all of your location directives, save and quit. 
 
-    location /transcriber {
-        try_files $uri /transcriber/index.php?$args;
-        }
+Here's something very cool.  From the command line you can run `nginx -c /etc/nginx/sites-available/project.conf -t` to have nginx check your configuration for errors.
 
-    location /qi/admin {
-        try_files $uri /qi/admin/index.php?$args;
-        }
+To enable this configuration, you'll need to create a symbolic link in the `apps-enabled` folder by typing:
 
-    location /qi {
-        try_files $uri /qi/index.php?$args;
-        }
-
-    location /themes {
-        alias /usr/share/nginx/html/qi/themes;
-        }
-
-    location / {
-        include /srv/QI/uwsgi_params;
-        uwsgi_pass unix:/run/uwsgi/app/QI/QI.socket;
-    }
-
-    location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        include /etc/nginx/fastcgi_params;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_intercept_errors on;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        }
-
-This is the configuration file for a project called QI. You'll need to go through the file and change QI to your project name throughout the file. Also make sure that the configuration file lists the correct version of Python for your project.
-
-Now restart Nginx with the new settings:
+    $ ln -s /etc/nginx/sites-enabled/projectname /etc/nginx/sites-available/projectname
+    
+Finally, restart the Nginx service to activate your project configuration:
 
     $ sudo service nginx restart
 
-Here's something very cool.  From the command line you can run `nginx -c /etc/nginx/nginx.conf -t` to have nginx check your configuration for errors.
+Pay attention to the status message on the right [Ok] is great, [fail] means that the settings are not yet correct.  Remember you can check the error logs by typing:
 
-Pay attention to the status message on the right [Ok] is great, [fail] means that the settings are yet correct.  You can check the error logs by typing:
-
-    $ tail
+    $ tail /var/log/nginx/error.log
+    
+Testing Nginx config by configuring local /etc/hosts file
 
 ## Step 4: Install MySQL ([source](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu))
 
