@@ -44,7 +44,7 @@ when you were added to an Omeka project.  Just follow the link to activate the a
 to the administration page.  
 
 You can also log in to the project by adding `/admin` to your project's web-address.  For most Haverford projects
-this means that you'll go to ds-omeka.haverford.edu/your courses's project name and then /admin.
+this means that you'll go to ds-omeka.haverford.edu/your-courses's-project-name and then /admin.
 
 [The Dashboard]
 The dashboard is the main interface that you'll use for Omeka and it will vary slightly from class to class.
@@ -53,7 +53,7 @@ Simply click on "Items" to add or edit an item.
 
 [Add an Item]
 Creating an item in Omeka is simple.  Once you've logged in to the admin page of your project,  
-simply click on "Items."  A new menu will appear with a green box labeled "Add an Item"
+click on "Items."  A new menu will appear with a green box labeled "Add an Item"
 You'll then see several tabs that allow you to change various parts of the item.
 "Dublin Core" is a very common metadata schema used in libraries, archives and museums. It
 establishes what fields will be used to describe your item.  If you click on "Item Type Metadata"
@@ -67,20 +67,20 @@ answered through good metadata.  Put yourself in the position of your audience. 
 What do they need to know in order to analyze and interpret your item? 
 
 Many of your items will include a file, image or link.  Keep in mind that the internet is an ever-changing
-environment.  Just because someone posted a video on YouTube doesn't mean they won't take it down, cancel their account
-or have the video removed for copyright infringement.  You want your item to be as stable and available as possible. 
-The best way to do this is to download the file or video and upload it to the Omeka project.  
+environment.  Just because someone posted a video on YouTube doesn't mean they won't take it down or cancel their account.
+Video are often removed for copyright infringement or because they violate community standards.  You want your item to be as stable 
+and available as possible. The best way to do this is to download the file or video and upload it to the Omeka project as an item.  
 
 To add a file to an item, click on the "Files" tab when editing the item.  You can then "Choose file" and upload 
 the file to Haverford's Omeka server. You can add multiple files to an item.  If the item refers to a zine, for example,
 you can include an image for each page without having to reenter the item metadata for each page. 
 
 In some cases, your file may be too large to upload or you may have to include a link to the file. 
-In these cases, be sure to use the simplest URL that links to your object. For example, in Twitter,
-you can click on the "v" (more) icon at the right of a tweet. From there you can "copy link to tweet." 
+In these cases, be sure to use the simplest URL that links to your object. For example, in Twitter, on the right side of a tweet,
+you can click on the "v" (more) icon. From there you can "copy link to tweet." 
 This gives you the most direct link to a specific tweet.  Facebook posts can be more complicated.
 If you right click on the time that the post was made, then "Copy link address" you will get a URL for that 
-post.  Sometimes this does not work and you'll need to take a screen capture to grab the item you want.
+post.  If that doesn't work, you can always take a screen capture to grab the item you want.
 
 One last thing to note is the "tags" button.  Tags function much like keywords or subject headings
 in a library catalog.  They are a way for you to describe your item in a way that will make it easier
@@ -143,7 +143,12 @@ You can manually adjust the side of your record on the map.
 
 If you're creating a timeline of records, you can enter the date for your record in the "Dates" area.
 
-If you are using an image to represent your record on the map, you can adjust this information under "Imagery"
+If you are using an image to represent your record on the map, you can adjust this information under "Imagery."
+When doing so, be sure to select "Draw Point" under the Map tab and adjust the Fill Opacity and Point Radius under the Style tab.
+Quite often, you won't be able to see the image until you make these adjustments (it's just too small).  We also recommend that you
+download the image file and add it to Omeka as an Item.  You can then the URL to the image on your project by going to Items from the Dashboard.
+Then click on the the image you want until it fills the entire screen and the file name appears in the URL.  Copy that URL
+and enter it under "Point Image" in the Style tab. 
 
 "Visibility" is a powerful feature that let's you define how and when users can see your record. 
 The most common useage of this section is to set the position and zoom that appears with your record. 
