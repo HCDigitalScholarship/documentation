@@ -1,6 +1,5 @@
 [Intro to Omeka]
-Hello!  In this short tutorial, we're going to give you a quick overview of Omeka and give you 
-the specific skills that you'll need to complete your assignments.
+Hello!  In this short tutorial, we're going to give you a quick overview of Omeka and give you the specific skills that you'll need to complete your assignments.
 
 Omeka is a free, flexible, and open source web-publishing platform used by scholars to curate digital exhibits. 
 
@@ -8,8 +7,9 @@ If you have a blog or read news websites, then you're already familiar with a co
 system (or CMS).  The main task of a CMS is to organize the content of a website.
 
 The main content of a newspaper, for example, is an article. 
-The New Yorker uses a CMS called WordPress to manage their articles.
-There are many CMSes out there, but they all perform a few key tasks:
+The digital magazine, Warscapes, for example, uses a CMS called Drupal to manage their content.
+
+There are many CMSes out there, but they all perform a few common tasks:
 1) They provide consistent design and functionality across the entire web-site. 
 2) They organize the content so that it can be searched or browsed.
 3) They provide user accounts with various levels of access.  A newspaper subscriber
@@ -17,70 +17,59 @@ can only read an article, while the editor can write and alter the text.
 
 So let's get back to Omeka, which is a content management system.  Omeka is especially useful for us
 because it is designed for online digital collections and exhibits.  Where WordPress is designed with
-bloggers foremost in mind, Omeka is designed for students like you.  It is managed by 
-a team at George Mason University in Virginia.
+bloggers foremost in mind, Omeka is designed for students like you.  It is managed by a team at George Mason University in Virginia.
 
 The primary content type in Omeka is an "item."  Each item has a variety of fields that describe it.
-We call this metadata.  Let's say the that item is a poem.  The item record will include the author of the poem,
-the title, the publisher and other information that describes the poem and makes it discoverable to
+We call this metadata.  Let's say the item is a poem.  The item record will include the author of the poem,
+the title, the publisher and other information that describes it and makes it discoverable to
 a potential reader.
 
-At its core, Omeka is designed to manage collections of items in a way that is consistent with 
-current museum and library standards.  The goal is to make your content visibile and discoverable 
-by fellow researchers.  Your work in Omeka will be available to the public and is part of an ongoing 
-digital scholarship project.  Keep this in mind as you compose and gather materials.  
-1) How would my intended reader react to what I've written?  Is my work clear and effective in communicating 
+At its core, Omeka is designed to manage collections of items in a way that is consistent with current museum and library standards.  The goal is to make your content visible and discoverable by fellow researchers.  Your work in Omeka will be available to the public and is part of an ongoing digital scholarship project.  Keep this in mind as you compose and gather materials.  
+1) How would my intended reader react to what I've written?  Is my work clearly and effectively communicate 
 my ideas? 
-2) Do I have permission to use all of my content?  Keep in mind that fair use typically includes 
-class sites and education activities.  However, companies crawl the web looking for copyright violations.  If they
+2) Do I have permission to use all of my content?  Keep in mind that fair use typically includes class sites and education activities.  However, companies crawl the web looking for copyright violations.  If they
 find you, you may receive a notice and have to prove that your use of their material falls under fair use.    
 As a general rule, only use your own materials or something from a known open source such as wikimedia.org.
 
 Now let's get started.
 
-[Logging in to Omeka]      
-The easiest way to log in to Omeka is simply to check your email.  A confirmation email was created
+[Logging-in to Omeka]      
+The easiest way to log-in to Omeka is simply to check your email.  A confirmation email was created
 when you were added to an Omeka project.  Just follow the link to activate the account and log in
 to the administration page.  
 
-You can also log in to the project by adding `/admin` to your project's web-address.  For most Haverford projects
+You can also log-in to the project by adding `/admin` to your project's web address.  For most Haverford projects
 this means that you'll go to ds-omeka.haverford.edu/your-courses's-project-name and then /admin.
 
 [The Dashboard]
-The dashboard is the main interface that you'll use for Omeka and it will vary slightly from class to class.
-Most of the features that you'll need appear in the brown column that begins with "Dashboard", "Items" "Collections" and so on.
+The dashboard is the main interface that you'll use for Omeka, and it will vary slightly from class to class.
+Most of the features that you'll need appear in the brown column that begins with "Dashboard," "Items" "Collections" and so on.
 Simply click on "Items" to add or edit an item. 
 
 [Add an Item]
 Creating an item in Omeka is simple.  Once you've logged in to the admin page of your project,  
 click on "Items."  A new menu will appear with a green box labeled "Add an Item"
 You'll then see several tabs that allow you to change various parts of the item.
-"Dublin Core" is a very common metadata schema used in libraries, archives and museums. It
-establishes what fields will be used to describe your item.  If you click on "Item Type Metadata"
+"Dublin Core" is a very common metadata schema used in libraries, archives, and museums. It
+establishes what fields will be used to describe your item.  If you click on "Item Type Metadata,"
 you can add more information about your item depending on its type, such as an Oral History or a Still Image.
 
 While you may be tempted to leave fields blank in the metadata, remember that this information
 provides an essential tool that researchers need to find and interpret your item once its on the web. 
-Think for a moment about a lost photograph.  From the image alone, I can only tell some very 
-basic information. It has a person in it...it looks old. But when was the photo taken? By whom? Where? Many of these questions can be 
-answered through good metadata.  Put yourself in the position of your audience.   What would they want to know about your item?
+Think for a moment about a lost photograph.  From the image alone, I can only tell some very basic information. It has a person in it. It looks old. But when was the photo taken? By whom? Where? Many of these questions can be answered through good metadata.  Put yourself in the position of your audience.   What would they want to know about your item?
 What do they need to know in order to analyze and interpret your item? 
 
 Many of your items will include a file, image or link.  Keep in mind that the internet is an ever-changing
 environment.  Just because someone posted a video on YouTube doesn't mean they won't take it down or cancel their account.
-Video are often removed for copyright infringement or because they violate community standards.  You want your item to be as stable 
-and available as possible. The best way to do this is to download the file or video and upload it to the Omeka project as an item.  
+Video are often removed for copyright infringement or because they violate community standards.  You want your item to be as stable and available as possible. The best way to do this is to download the file or video and upload it to the Omeka project as an item.  
 
-To add a file to an item, click on the "Files" tab when editing the item.  You can then "Choose file" and upload 
-the file to Haverford's Omeka server. You can add multiple files to an item.  If the item refers to a zine, for example,
+To add a file to an item, click on the "Files" tab when editing the item.  You can then "Choose File" and upload the file to Haverford's Omeka server. You can add multiple files to an item.  If the item refers to a zine, for example,
 you can include an image for each page without having to reenter the item metadata for each page. 
 
-In some cases, your file may be too large to upload or you may have to include a link to the file. 
+In some cases, your file may be too large to upload, or you may have to include a link to the file. 
 In these cases, be sure to use the simplest URL that links to your object. For example, in Twitter, on the right side of a tweet,
 you can click on the "v" (more) icon. From there you can "copy link to tweet." 
-This gives you the most direct link to a specific tweet.  Facebook posts can be more complicated.
-If you right click on the time that the post was made, then "Copy link address" you will get a URL for that 
-post.  If that doesn't work, you can always take a screen capture to grab the item you want.
+This gives you the most direct link to a specific tweet.  In Facebook, you can right click on the time that the post was created, then "Copy link address" you will get a URL for that specific post.  If that doesn't work, you can always take a screen capture to grab the item you want.
 
 One last thing to note is the "tags" button.  Tags function much like keywords or subject headings
 in a library catalog.  They are a way for you to describe your item in a way that will make it easier
@@ -89,21 +78,18 @@ that you follow the agreed vocabulary.  Otherwise, think about potential researc
 What is important about your item and should be tagged?        
 
 [Intro to Neatline]
-Hello!  In this tutorial, we're going to give a quick overview of Neatline and give you 
-the specific skills that you'll need to complete your assignment.
+Hello!  In this tutorial, we're going to give a quick overview of Neatline and give you the specific skills that you'll need to complete your assignment.
 
-To begin, log in to the dashboard of your Omeka project.  This can be done by adding /admin
+To begin, log-in to the dashboard of your Omeka project.  This can be done by adding /admin
 to the web-address for your project.  For example,
 https://ds-omeka.haverford.edu/literatureandart/admin/
-In the brown collumn on the left hand site of the page, click on "Neatline." 
+In the brown column on the left-hand side of the page, click on "Neatline." 
 
 From here you can create or contribute to an existing exhibit.  In most cases, your professor
 will have already created the exhibit. 
 Click on the name of the exhibit to proceed.
 
-In many ways, Neatline is just like Google Maps.  We have a base map (or an image) with 
-a system of coordinates that lets us describe locations on the map.  Neatline gives us 
-the ability to create points on the map, draw shapes or to place images on the map.  
+In many ways, Neatline is just like Google Maps.  We have a base map (or an image) with a system of coordinates that lets us describe locations on the map.  Neatline gives us the ability to create points on the map, draw shapes or to place images on the map.  
 Keep in mind that, with Neatline, we're not limited to using maps.  We can use images,
 graphs, or other kinds of base layers and points.
 
@@ -116,28 +102,26 @@ change the formatting, add images or tables and to directly edit the HTML. You c
 the capabilities and formatting of HTML in this tutorial (http://www.w3schools.com/html/)
 
 The "item" tab is an easy way to link your "record" to an existing "item" in the Omeka project. 
-However, students prefer not to use this feature.  You lose control of the formatting of your record and 
+However, students prefer not to use this feature.  You lose control of the formatting of your record, and 
 it displays all of the metadata for your item on the map.  A better solution is to create
 a link to an item in the body of the Neatline record.  Just open your item in a browser and copy 
 the URL (for example, "https://ds-omeka.haverford.edu/literatureandart/items/show/1")  
-When you're editing either the title or body of your record, click on "Edit HTML", select the text or image that 
-will link to the item and click on the link button.  You can then enter the URL for the link.  
+When you're editing either the title or body of your record, click on "Edit HTML," select the text or image that will link to the item and click on the link button.  You can then enter the URL for the link.  
 
-The "Map" tab is where you create the visual component of your record.  The simplest option is 
-a point.  Just double-click on the map and a point will be created.  You'll see some text is added with the 
-point's information under "Geometry."  Click save and that's all there is to it. 
+The "Map" tab is where you create the visual component of your record.  The simplest option is a point.  Just double-click on the map and a point will be created.  You'll see some text is added with the 
+point's information under "Geometry."  Click save, and that's all there is to it. 
 
 The blue question marks go into greater detail about the various options available to you.  Draw
 SVG is a visually engaging way to use images to represent your record on the map. Note also
-that you can use multiple lines, polygons and images to represent your record on the map. 
+that you can use multiple lines, polygons, and images to represent your record on the map. 
 
 The "Style" tab is a powerful menu.  
 
 Just as with an item, you can add tags that increase your record's visibility in searches.
-If your project is using a Neatline plugin, you'll need to activate it under "Widgets"
+If your project is using a Neatline plugin, you'll need to activate it under "Widgets."
  
 You can change the color of your point, line or polygon.
-You can change it's opacity. 
+You can change its opacity. 
 
 You can manually adjust the side of your record on the map. 
 
@@ -146,18 +130,17 @@ If you're creating a timeline of records, you can enter the date for your record
 If you are using an image to represent your record on the map, you can adjust this information under "Imagery."
 When doing so, be sure to select "Draw Point" under the Map tab and adjust the Fill Opacity and Point Radius under the Style tab.
 Quite often, you won't be able to see the image until you make these adjustments (it's just too small).  We also recommend that you
-download the image file and add it to Omeka as an Item.  You can then the URL to the image on your project by going to Items from the Dashboard.
-Then click on the the image you want until it fills the entire screen and the file name appears in the URL.  Copy that URL
+download the image file and add it to Omeka as an Item.  You can then use the URL to the image on your project by going to Items from the Dashboard.
+Then click on the image you want until it fills the entire screen and the file name appears in the URL.  Copy that URL
 and enter it under "Point Image" in the Style tab. 
 
-"Visibility" is a powerful feature that let's you define how and when users can see your record. 
-The most common useage of this section is to set the position and zoom that appears with your record. 
-Just adjust the zoom and position on the map to your liking and click on "Use Current Viewport as Default"
+"Visibility" is a powerful feature that lets you define how and when users can see your record. 
+The most common usage of this section is to set the position and zoom that appears with your record. 
+Just adjust the zoom and position on the map to your liking and click on "Use Current Viewport as Default."
 Now when your record is opened, the map will move to that point.  
 
 You can also adjust min zoom and max zoom to change the record's visibility at various levels. 
-For example, you might make one layer of records, say continents, when the map is zoomed out to the 
-whole world.  When a user zooms in further, the records change to represent regions or countries. 
+For example, you might make one layer of records, say continents, when the map is zoomed out to the whole world.  When a user zooms in further, the records change to represent regions or countries. 
 Adjusting zoom levels makes it so that the global level isn't cluttered with country-level 
 or local-level records.  
 
