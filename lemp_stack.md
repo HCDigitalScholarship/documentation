@@ -74,7 +74,7 @@ The URL above comes from the "Clone or download" button on Github. You will then
 - `$ git checkout <branch>` switch to an already-existing branch
 - `$ git checkout <commit-hash>` look at another commit (a previous "save"). The commit hash can be found with the `git log` command.
 - `$ git freeze`
-- `$ git stash`
+- `$ git stash`Temporarily stores all modified tracked files
 
 ## Step X: Install Project Requirements
 
@@ -127,7 +127,7 @@ These lines contain specifics for the application server hooking into the app.
 
     # Performance tuning
     processes = 4
-    threads = 2`
+    threads = 2
 
 The python plugin by default does not have threads enabled, so we enable threading support here. We can adjust these lines based on performance once the project is deployed.
 
@@ -135,8 +135,10 @@ Save and quit.
 
 Create a symbolic link in `/apps-enabled` to the `.ini` file in `/apps-available` to activate the configuration:
 
-    $ ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini
-        
+    $ sudo ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini
+
+Or switch to root to execute this command.
+
 Restart the service
     
     $ sudo service uwsgi restart
