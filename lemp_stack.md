@@ -137,7 +137,7 @@ Create a symbolic link in `/apps-enabled` to the `.ini` file in `/apps-available
 
     $ sudo ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini
 
-Or switch to root to execute this command.
+Or switch to root (sudo su -) to execute this command.
 
 Restart the service
     
