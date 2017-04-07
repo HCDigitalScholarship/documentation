@@ -38,7 +38,6 @@ Since this is our first interaction with the apt packaging system in this sessio
 Enter the following commands to install virtualenv:
 
     $ sudo apt-get install python-virtualenv
-    $ cd
     $ sudo mkdir /usr/local/lib/python-virtualenv
     $ cd /usr/local/lib/python-virtualenv
 
