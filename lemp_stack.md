@@ -134,7 +134,7 @@ Save and quit.
 
 Create a symbolic link in `/apps-enabled` to the `.ini` file in `/apps-available` to activate the configuration:
 
-    $ sudo ln -s /etc/uwsgi/apps-enabled/config.ini /etc/uwsgi/apps-available/config.ini
+    $ sudo ln -s /etc/uwsgi/apps-available/config.ini /etc/uwsgi/apps-enabled/config.ini
 
 Or switch to root (sudo su -) to execute this command.
 
