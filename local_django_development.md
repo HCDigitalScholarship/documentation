@@ -1,5 +1,9 @@
+##
+
 On a Mac? Install homebrew if you haven't already
+
   https://brew.sh/
+
 Install git via homebrew if not already installed
   
   `brew install git`
