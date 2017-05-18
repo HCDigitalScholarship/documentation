@@ -42,8 +42,9 @@ Keep in mind that you can source this file from anywhere on the file system as l
   `source ~/Virtualenvs/name-of-project/bin/activate`
 
 If you already use Anaconda or would like to try it, it can be downloaded here: https://www.continuum.io/downloads
-Once downloaded, you can type `conda create -n name-of-project` to create a new enviornment.  Conda makes it easy to work in Python 2 and 3.  To specify the version of Python for the enviornment, add `python=3` or `python=2`.  For example, `conda create -n name-of-project python=3`.  
-To activate the enviornment, just type `source activate name-of-project` from any directory. Use `source deactivate` to leave it.  Everything else will be the same as virtualenv.  
+Once downloaded, you can type `conda create -n name-of-project` to create a new environment.  Conda makes it easy to work in Python 2 or 3.  To specify the version of Python for the environment, add `python=3` or `python=2`.  For example, `conda create -n name-of-project python=3.6`.  Nearly all of our projects use 2.7. 
+
+To activate the environment, just type `source activate name-of-project` from any directory. Use `source deactivate` to leave it.  Everything else will be the same as virtualenv.  
 
 For a full list of available packages for Anaconda, go here: https://docs.continuum.io/anaconda/pkg-docs
 
