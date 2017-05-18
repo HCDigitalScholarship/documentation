@@ -24,9 +24,9 @@ The likely response will be something like `/usr/local/bin/virtualenv`. If you s
 ### Create folders for projects and virtualenvs
 We also need to create one folder each for projects/Github repositories and for Virtualenvs. We can do this in one step:
   
-  `sudo mkdir -p ~/Projects ~/Virtualenvs`
+  `mkdir -p ~/Projects ~/Virtualenvs`
   
-Note that the `~` character is a shorthand for your home directory. 
+Depending on your user permissions, you may need to add `sudo` in front of the `mkdir` command. If the new directories are in your home directory, that will likely not be necessary. Note that the `~` character is a shorthand for your home directory. 
 
 ### Create and activate the virtualenv
 Let's move to the `~/Virtualenvs` folder and then create the virtualenv for our project, our example here is `pennstreaty`:
