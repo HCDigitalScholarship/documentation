@@ -1,5 +1,5 @@
 ## Style Guide for Readme Files
-###[ Project Title]
+### [ Project Title]
 #### Status
 #### Overview
 Provide a brief summary of the project.
