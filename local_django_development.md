@@ -1,16 +1,16 @@
-##Virtualenv and Local Django Development
+## Virtualenv and Local Django Development
 
 In this tutorial, we'll install Python virtualenv, clone a Django project to a local repository (on your laptop or desktop machine), and run the Django server.
 
-###Install a package manager for Mac OS
+### Install a package manager for Mac OS
 On a Mac? Install homebrew if you haven't already by following the instructions at https://brew.sh/. Homebrew is a package manager for command line tools, similar to the aptitude or yum package managers for Linux. When you install a command line tool via homebrew, it downloads the source code from a trusted repository and unpacks it for you... no other intervention required!
 
-###Install Git
+### Install Git
 You can install git from the git website, and can use a desktop client if you prefer a graphical interface. Git as a command line tool si very simple to use, and can be installed via homebrew if you don't already have it.
   
   `brew install git`
 
-###Install virtualenv
+### Install virtualenv
 Next, we'll install virtualenv using pip. Pip is a package manager for Python--similar to package managers for Linux or Mac OS--that downloads source code from trusted repositories. Virtualenv creates a self-contained Python environment that, when activated, allows specific versions of plugins/libraries to be run locally. If, for example, I have NumPy 1.12 installed on my system but I the project I'm developing uses NumPy 1.8, I can install 1.8 within the virtualenv to avoid version conflicts with my sytem installation. When the virtualenv is activated, Python will look for v1.8. When it's deactivated, it will default to the system Python installation and v1.12.
   
   `pip install virtualenv`
@@ -21,14 +21,14 @@ You can test to make sure virtualenv was installed by typing
 
 The likely response will be something like `/usr/local/bin/virtualenv`. If you see nothing in response, virtualenv was not installed.
 
-###Create folders for projects and virtualenvs
+### Create folders for projects and virtualenvs
 We also need to create one folder each for projects/Github repositories and for Virtualenvs. We can do this in one step:
   
   `sudo mkdir -p ~/Projects ~/Virtualenvs`
   
 Note that the `~` character is a shorthand for your home directory. 
 
-###Create and activate the virtualenv
+### Create and activate the virtualenv
 Let's move to the `~/Virtualenvs` folder and then create the virtualenv for our project, our example here is `pennstreaty`:
   
   `virtualenv name-of-project`
@@ -41,7 +41,7 @@ Keep in mind that you can source this file from anywhere on the file system as l
   
   `source ~/Virtualenvs/name-of-project/bin/activate`
 
-###Clone the repository and install requirements
+### Clone the repository and install requirements
 The next step is to pull the repository to your laptop into the `~/Projects` folder we created. Copy the path to the repo by clicking the green "Clone or Download" button on the Github repository. Then, in the terminal window, type:
 
   `git clone https://github.com/path-to-repository.git`
@@ -50,14 +50,14 @@ Once you have cloned the repo, move into the root directory of the repo. There w
 
   `pip install -r requirements.txt`
 
-###Make sure the settings file is in place
+### Make sure the settings file is in place
 There is a good chance that the repo will not include the `settings.py` file required to run the project. Settings files often contain database authentication information, including usernames and passwords for the database server. As such, it is best practice to not track any files that contain authentication credentials. You will need to obtain the settings file from someone. Talk to your supervisor or project lead about gaining access to it. Once you have the file, you'll need to place it in the main app folder alongside `urls.py`, `views.py`, etc. Make sure that the database section of the settings file points to the `db.sqlite3` file for local development.
 
-###Run the Django server
+### Run the Django server
 Last but not least, `cd` back into the main folder of the repo where `manage.py` is, and runserver!
 
 `python manage.py runserver`
   
- This should start the server on port 8000 by default. You can specify which port the Django server runs on after the runserver command. For example, run `python manage.py runserver 0.0.0.0:8080` to run the server on port 8080 (0.0.0.0 and 127.0.0.1 are IP address stand-ins for 'localhost'). To test the project, open a browser window and navigate to `http://localhost:8000` (or the port number you specified in the runserver command). You should see the home page of the project! Note that as you click around, the Django server logs activity and errors to the terminal window. See the [Django documentation](https://docs.djangoproject.com/en/1.11/ref/django-admin/#runserver) for ways to run the server in the background, and other tricks to the runserver command.
+This should start the server on port 8000 by default. You can specify which port the Django server runs on after the runserver command. For example, run `python manage.py runserver 0.0.0.0:8080` to run the server on port 8080 (0.0.0.0 and 127.0.0.1 are IP address stand-ins for 'localhost'). To test the project, open a browser window and navigate to `http://localhost:8000` (or the port number you specified in the runserver command). You should see the home page of the project! Note that as you click around, the Django server logs activity and errors to the terminal window. See the [Django documentation](https://docs.djangoproject.com/en/1.11/ref/django-admin/#runserver) for ways to run the server in the background, and other tricks to the runserver command.
  
 Also check the [Django docs](https://docs.djangoproject.com/en/1.11/ref/django-admin) for more things you can do with `manage.py`. You can apply database migrations, add admin user accounts, and more! Remember that you cannot run any Python scripts in the Django project (including the Django server) unless you've activated the virtualenv. 
