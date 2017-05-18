@@ -49,6 +49,10 @@ The next step is to pull the repository to your laptop into the `~/Projects` fol
 Once you have cloned the repo, move into the root directory of the repo. There will be a file in the repo called `requirements.txt` that contains a list of the Python libraries the project needs. We can install all of the libraries with one command:
 
   `pip install -r requirements.txt`
+  
+It's possible that some of the Python libraries will have OS-level dependencies. These can be dealt with on a case-by-case basis, but may require you to install some packages through brew or aptitude. 
+
+For projects that have already been deployed and are using a database server, the requirements file will likely include a database connector library--chances are this will be psycopg2 for projects using PostgreSQL and MysqlDB for projects using MYSQL.
 
 ### Make sure the settings file is in place
 There is a good chance that the repo will not include the `settings.py` file required to run the project. Settings files often contain database authentication information, including usernames and passwords for the database server. As such, it is best practice to not track any files that contain authentication credentials. You will need to obtain the settings file from someone. Talk to your supervisor or project lead about gaining access to it. Once you have the file, you'll need to place it in the main app folder alongside `urls.py`, `views.py`, etc. Make sure that the database section of the settings file points to the `db.sqlite3` file for local development.
