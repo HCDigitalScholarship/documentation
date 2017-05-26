@@ -90,7 +90,7 @@ What is an application server and why are we using it?
 
 Sockets: uWSGI can create multiple types of sockets, and we will use two of them here--HTTP and Unix. We'll start with an HTTP socket so that we can reqeust HTML from the app without having to also configure a web server. Once we are sure that uWSGI is properly configured, we will switch to a Unix file socket for performance and security reasons.
 
-    $ pip install uwsgi
+    $ sudo apt-get install uwsgi
 
 Create a new file /etc/uwsgi/apps-available/project_name.ini and paste in the following contents:
 
