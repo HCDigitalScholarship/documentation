@@ -1,4 +1,4 @@
-**WARNING: **This tutorial is incomplete! You will have to figure some things out for yourself. When you do, please edit the tutorial to include that information.
+**WARNING:** This tutorial is incomplete! You will have to figure some things out for yourself. When you do, please edit the tutorial to include that information.
 
 
 
