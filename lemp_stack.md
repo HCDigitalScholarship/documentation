@@ -2,9 +2,9 @@
 
 
 
-In this tutorial, we will install all of the needed requirements for a LEMP stack (Linux, Nginx, MySQL, and PHP or Python). This will all take place on a virtual machine running Ubuntu 14.04 created for us by [IITS](mailto:prodesk@haverford.edu). 
+In this tutorial, we will install all of the needed requirements for a LEMP stack (Linux, Nginx, MySQL, and PHP or Python). This will all take place on a virtual machine running Ubuntu 14.04 or 16.04 created for us by [IITS](mailto:prodesk@haverford.edu). 
 
-The tutorial assumes basic knowledge of the Unix command line. Note that wherever you see text in `<angle brackets>`, you are supposed to substitute it (including the brackets) with your own value. For example, if you see `ssh <username>@haverford.edu`, you might write `ssh kbenston@haverford.edu` instead. If you need a refresher on common Unix commands, see Appendix B. 
+The tutorial assumes basic knowledge of the Unix command line. If you need a refresher on common Unix commands, see Appendix B.  Note that wherever you see text in `<angle-brackets>`, you are supposed to substitute it (without the brackets) with your own value. For example, if you see `ssh <username>@haverford.edu`, you might write `ssh kbenston@haverford.edu` instead. If a file name has spaces, make sure to put quotes around it. `rm foo bar` removes two files, `foo` and `bar`, while `rm "foo bar"` removes a single file called `foo bar`.
 
 Whenever there is a command, you should run, it will be set on its own line and preceded by a dollar sign; don't type the dollar sign. So if you see
 
@@ -57,7 +57,7 @@ Nginx is the server software that you'll be using. It can be installed with
 $ sudo apt-get install nginx
 ```
 
-Now visit the IP address or hostname of your project in your browser. You should see an Nginx welcome page. If you don't try, running
+Now visit the IP address or hostname of your project in your browser. You should see an Nginx welcome page. If you don't, try running
 
 ```
 $ sudo /etc/init.d/nginx start
@@ -116,9 +116,9 @@ You'll probably need to do some additional configuration to get Postgres to comm
 
 ## Step 4: Install PHP or Python
 
-### Python
+If you're using PHP, follow [this tutorial](https://github.com/HCDigitalScholarship/documentation/blob/master/php.md) to get it installed.
 
-If you're using Python you should be good to go—Python comes preinstalled on Ubuntu 14.04 systems. You will most likely need to install either the `python-dev` or `python3-dev` package, depending on which version of Python your website uses. Do
+Python already comes preinstalled on Ubuntu systems. You will most likely need to install either the `python-dev` or `python3-dev` package, depending on which version of Python your website uses. Do
 
 ```
 $ sudo apt-get install python-dev
@@ -134,39 +134,19 @@ OR, for Python 3
 $ sudo apt-get install python3-pip
 ```
 
-### PHP
+Some packages need additional setup. You should only follow these steps if your project requires these packages.
 
-PHP is an open source web scripting language that is widely use to build dynamic webpages. You only need to install PHP if you're using Omeka, Drupal or another PHP-bases content management system. Otherwise, there's no need and you can skip to the next step.
+### psycopg2
 
-To install PHP, open terminal and type in this command.
-
-```
-$ sudo apt-get install php5-fpm
-```
-
-Next, we need to make one small change in the php configuration. Open up `php.ini`:
+The `psycopg2` is a Python interface for communicating with PostgreSQL databases. It has several prerequisites that need to be installed:
 
 ```
-$ sudo vim /etc/php5/fpm/php.ini
+$ sudo apt-get install libpq-dev build-essential postgresql-server-dev-all
 ```
 
-Find the line, `cgi.fix_pathinfo=1`, and change the 1 to 0.
+### lxml
 
-If this number is kept as 1, the PHP interpreter will do its best to process the file that is as near to the requested file as possible. This is a possible security risk. If this number is set to 0, conversely, the interpreter will only process the exact file path—a much safer alternative.
-
-[This next step may be optional, it was already set when I tried it] We need to make another small change in the php5-fpm configuration. Open up `www.conf`:
-
-```
-$ sudo vim /etc/php5/fpm/pool.d/www.conf
-```
-
-Find the line, `listen = 127.0.0.1:9000`, and change the `127.0.0.1:9000` to `/var/run/php5-fpm.sock`. 
-
-Restart php-fpm:
-
-```
-sudo service php5-fpm restart
-```
+The `lxml` package is used for XML parsing. Installing it on Ubuntu is tricky.
 
 ## Step 5: Clone your app
 
@@ -244,53 +224,37 @@ in the root directory of your project with the virtualenv activated. If it runs 
 
 This step only needs to be done if you're deploying a Python app (e.g., Django or Flask). The Nginx server knows how to serve webpages to the outside world, but it doesn't know how to communicate with Python applications. That's where uWSGI comes in: it's the bridge between your Python framework and the Nginx server.
 
-Make sure your virtualenv is NOT activated. Install uWSGI with
+Install uWSGI with
 
 ```
-$ sudo pip install uwsgi
-OR, if using Python 3
-$ sudo pip3 install uwsgi
+$ sudo apt-get install uwsgi uwsgi-python-plugin
 ```
 
 Copy [this file](https://raw.githubusercontent.com/nginx/nginx/master/conf/uwsgi_params) into your root project directory and name is `uwsgi_params`. If you save it on your local computer you can copy it like this (running this command locally):
 
 ```
-$ scp uwsgi_params <username>@<server name>:/tmp/
+$ scp uwsgi_params <username>@<servername>:/tmp/
 ```
 
 And then back on the server:
 
 ```
-$ sudo mv /tmp/uwsgi_params <your project directory>
+$ sudo mv /tmp/uwsgi_params <project-directory>
 ```
 
-Now, using the same process, copy this file to `/etc/nginx/sites-available/<project name>` (lightly modified from the example [on the uWSGI docs](http://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)).
+Now, using the same process, copy this file to `/etc/nginx/sites-available/<project name>`, editing it to insert your project-specific information.
 
 ```
-# configuration of the server
 server {
-    # the port your site will be served on
     listen      80;
-    # the domain name it will serve for
-    server_name .example.com; # substitute your machine's IP address or FQDN
-    charset     utf-8;
-
-    # max upload size
-    client_max_body_size 75M;   # adjust to taste
-
-    # Django media
-    location /media  {
-        alias /path/to/your/mysite/media;  # your Django project's media files - amend as required
-    }
 
     location /static {
-        alias /path/to/your/mysite/static; # your Django project's static files - amend as required
+        alias /path/to/your/mysite/static;
     }
 
-    # Finally, send all non-media requests to the Django server.
     location / {
-        uwsgi_pass  django;
-        include     /path/to/your/mysite/uwsgi_params; # the uwsgi_params file you installed
+        uwsgi_pass  unix:/run/uwsgi/app/<projectname>/<projectname>.socket;
+        include     /path/to/your/mysite/uwsgi_params;
     }
 }
 ```
@@ -326,16 +290,29 @@ $ sudo mkdir /etc/uwsgi/apps-enabled
 $ ln -s /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled
 ```
 
+Make sure that root is the owner of all the configuration files:
+
+```
+$ sudo chown root:root /etc/nginx/sites-available/<projectname> /etc/nginx/sites-enabled/<projectname> /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled/<projectname>.ini
+```
+
+Restart Nginx and uWSGI:
+
+```
+$ sudo service nginx restart
+$ sudo service uwsgi restart
+```
+
 
 
 ## Appendix A - Other Resources
 
 Many of these resources were used to prepare this tutorial and can be consulted for further reference.
 
-- [How To Install Linux, nginx, MySQL, PHP (LEMP) stack on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
+- [How To Install Linux, nginx, MySQL, PHP (LEMP) stack on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04) (note Ubuntu 14.04)
 - [Setting up Django and your web server with uWSGI and nginx](http://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 - [PostgreSQL on Ubuntu](https://help.ubuntu.com/community/PostgreSQL)
-- [Setting up PostgreSQL with Python 3 and psycopg on Ubuntu 16.04](https://www.fullstackpython.com/blog/postgresql-python-3-psycopg2-ubuntu-1604.html) (note Ubuntu 16.04)
+- [Setting up PostgreSQL with Python 3 and psycopg on Ubuntu 16.04](https://www.fullstackpython.com/blog/postgresql-python-3-psycopg2-ubuntu-1604.html)
 
 ## Appendix B - Common Unix Commands
 
