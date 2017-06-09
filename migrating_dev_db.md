@@ -1,4 +1,4 @@
-##Migrating from a Development Database to Production
+## Migrating from a Development Database to Production
 
 If you are developing a Django project with a SQLite development database and want to migrate that data to your production database (either MYSQL or PostgresQL), there are many opportunities for things to go horribly wrong. Hopefully these steps will make the process a little easier.
 
