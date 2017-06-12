@@ -1,12 +1,12 @@
-**WARNING:** This tutorial is incomplete! You will have to figure some things out for yourself. When you do, please edit the tutorial to include that information.
+**WARNING**: This tutorial is incomplete! You will have to figure some things out0 for yo:self. When you do, please edit the tutorial to include that information.
 
 
 
-In this tutorial, we will install all of the needed requirements for a LEMP stack (Linux, Nginx, MySQL, and PHP or Python). This will all take place on a virtual machine running Ubuntu 14.04 or 16.04 created for us by [IITS](mailto:prodesk@haverford.edu). 
+In this tutorial, we will install all of the needed requirements for a LEMP stack (Linux, Nginx, MySQL, and PHP or Python). This will all take place on a virtual machine running Ubuntu 14.04 created for us by [IITS](mailto:prodesk@haverford.edu). While written with Ubuntu 14.04 in mind, most of the information here is also correct for Ubuntu 16.04.
 
-The tutorial assumes basic knowledge of the Unix command line. If you need a refresher on common Unix commands, see Appendix B.  Note that wherever you see text in `<angle-brackets>`, you are supposed to substitute it (without the brackets) with your own value. For example, if you see `ssh <username>@haverford.edu`, you might write `ssh kbenston@haverford.edu` instead. If a file name has spaces, make sure to put quotes around it. `rm foo bar` removes two files, `foo` and `bar`, while `rm "foo bar"` removes a single file called `foo bar`.
+The tutorial assumes basic knowledge of the Unix command line. If you need a refresher on common Unix commands, see Appendix B.  Note that wherever you see text in `<angle-brackets>`, substitute it (without the brackets) with your own value. For example, if you see `ssh <username>@haverford.edu`, you might write `ssh kbenston@haverford.edu` instead. If a file name has spaces, make sure to put quotes around it. `rm foo bar` removes two files, `foo` and `bar`, while `rm "foo bar"` removes a single file called `foo bar`.
 
-Whenever there is a command, you should run, it will be set on its own line and preceded by a dollar sign; don't type the dollar sign. So if you see
+Whenever there is a command you should run, it will be set on its own line and preceded by a dollar sign; don't type the dollar sign. So if you see
 
 ```
 $ echo "Hello, world"
@@ -30,7 +30,7 @@ If you get stuck at any part of this tutorial, check out the additional resource
 The first step is to log onto the server. Your information should have been provided to you by one of the DS librarians.
 
 ```
-$ ssh <username>@<server name>
+$ ssh <username>@<server-name>
 ```
 
 This will open a remote session with the server. When you're done, type `exit` or press Control+D.
@@ -84,7 +84,7 @@ $ sudo mysql_secure_installation
 
 The second script will give you several prompts to remove unsafe defaults: press enter for all of them.
 
-Your MySQL database is now set up!
+Your MySQL installation is now complete! You'll still need to set up a database for your application.
 
 ### PostgreSQL
 
@@ -100,19 +100,18 @@ Some setup needs to be done. Type
 $ sudo -u postgres psql postgres
 ```
 
-This should open up a new prompt, something like `postgres=#`. Type `\password postgres` to set the main Postgres password. Make sure to write it down somewhere.
-
-You should make a Postgres account before you create your database. The username should reflect the project, so for example the database user for a project Foo might be called `foodb`. Still at the Postgres prompt, type (make sure to put single quotes around the password, and a semicolon at the end of the line)
+This should open up a new prompt, something like `postgres=#`. You should make a Postgres account before you create your database. The username should reflect the project, so for example the user for a project Foo might be called `fooadmin`, and the database could be called `foodb`. Still at the Postgres prompt, type (make sure to put single quotes around the password, and a semicolon at the end of the line)
 
 ```
-$ CREATE USER <some descriptive name> WITH PASSWORD '<password>';
-$ CREATE DATABASE <your database name>;
-$ GRANT ALL PRIVILEGES ON DATABASE <your database name> TO <the username you created>;
+$ CREATE USER <database-username> WITH PASSWORD '<password>';
+$ CREATE DATABASE <database-name>;
+$ ALTER ROLE <database-username> SET client_encoding TO 'utf8';
+$ ALTER ROLE <database-username> SET default_transaction_isolation TO 'read committed';
+$ ALTER ROLE <database-username> SET timezone TO 'UTC';
+$ GRANT ALL PRIVILEGES ON DATABASE <database-name> TO <database-username>;
 ```
 
 Finally, type `\q` to exit.
-
-You'll probably need to do some additional configuration to get Postgres to communicate with your application. Check out [the Postgres documentation](https://help.ubuntu.com/community/PostgreSQL) for more details. If you're using Python, you probably need the `psycopg2` package. This will be installed in step 5, but take a look at [this Stack Overflow post](https://stackoverflow.com/questions/5420789/how-to-install-psycopg2-with-pip-on-python) if you get any installation errors.
 
 ## Step 4: Install PHP or Python
 
@@ -146,7 +145,16 @@ $ sudo apt-get install libpq-dev build-essential postgresql-server-dev-all
 
 ### lxml
 
-The `lxml` package is used for XML parsing. Installing it on Ubuntu is tricky.
+The lxml package is used for XML parsing. Installing it on Ubuntu is tricky. You'll need the following packages:
+
+```
+$ sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev lib32z1-dev
+$ sudo apt-get build-dep python3-lxml
+```
+
+Some of those packages might not be necessary. If you have some free time, you can experiment with the minimal number of packages needed to successfully compile lxml.
+
+You will likely also need to set up a swapfile to give the compiler enough memory to finish compilation. Follow the instructions in [this Stack Overflow post](https://stackoverflow.com/questions/24455238/lxml-installation-error-ubuntu-14-04-internal-compiler-error) (and make sure to turn the swapfile off when you're done).
 
 ## Step 5: Clone your app
 
@@ -178,16 +186,10 @@ Now, make a virtual environment for your project in the `/usr/local/lib/python-v
 ```
 $ sudo mkdir /usr/local/lib/python-virtualenv
 $ cd /usr/local/lib/python-virtualenv
-$ sudo virtualenv <your project name> --python=<your Python version>
+$ sudo virtualenv <projectname> --python=<your Python version>
 ```
 
 Make sure to supply `virtualenv` with the version of Python you want to be using. Usually this will be `--python=python2.7` for Python 2 or `--python=python3.4` for Python 3.
-
-Now you can activate your virtualenv with
-
-```
-$ source /usr/local/lib/python-virtualenv/<your-project-name>/bin/activate
-```
 
 Unfortunately, virtualenv does not play nicely with the Unix permissions system. If you have your virtualenv activated and you run a command with `sudo`, the virtualenv won't apply for that command. Usually the only time you need to activate your virtualenv is to run `manage.py` (you can edit files and restart the server without needing the virtualenv) and to install new Python packages. Here's how you can do that:
 
@@ -210,7 +212,7 @@ $ pip3 install -r requirements.txt
 
 If you get an error, it is most likely because you forgot to switch to root. Don't run it again with `sudo`; follow the steps above to make sure that your virtualenv is properly activated in root mode.
 
-The git repo you cloned probably didn't contain a `settings.py` file, for security reasons. You'll need to copy this from wherever you were developing previously. The exact location depends on your project's setup, but, for a project `foo`, it would typically go in either `foo/foo/settings.py` or `foo/settings.py`.
+The git repo you cloned probably didn't contain a `settings.py` file, for security reasons. You'll need to copy this from wherever you were developing previously. The exact location depends on your project's setup, but, for a project `foo`, it would typically go in either `foo/foo/settings.py` or `foo/settings.py`. You also may need to change the `DATABASES` variable in the settings file. If you are setting up a production server, make sure `DEBUG` is set to `False`.
 
 Try running
 
@@ -227,7 +229,7 @@ This step only needs to be done if you're deploying a Python app (e.g., Django o
 Install uWSGI with
 
 ```
-$ sudo apt-get install uwsgi uwsgi-python-plugin
+$ sudo apt-get install uwsgi uwsgi-plugin-python
 ```
 
 Copy [this file](https://raw.githubusercontent.com/nginx/nginx/master/conf/uwsgi_params) into your root project directory and name is `uwsgi_params`. If you save it on your local computer you can copy it like this (running this command locally):
@@ -242,11 +244,11 @@ And then back on the server:
 $ sudo mv /tmp/uwsgi_params <project-directory>
 ```
 
-Now, using the same process, copy this file to `/etc/nginx/sites-available/<project name>`, editing it to insert your project-specific information.
+Now, using the same process, copy this file to `/etc/nginx/sites-available/<projectname>`, editing it to insert your project-specific information. If you're setting up a new server for a project that is already in production, you're probably better off copying the configuration file from the production server and making any necessary changes.
 
 ```
 server {
-    listen      80;
+    listen 80;
 
     location /static {
         alias /path/to/your/mysite/static;
@@ -254,7 +256,7 @@ server {
 
     location / {
         uwsgi_pass  unix:/run/uwsgi/app/<projectname>/<projectname>.socket;
-        include     /path/to/your/mysite/uwsgi_params;
+        include     /srv/<projectname>/uwsgi_params;
     }
 }
 ```
@@ -265,7 +267,7 @@ Now you want to symlink this file to the `sites-enabled` directory.
 $ ln -s /etc/nginx/sites-available/<projectname>  /etc/nginx/sites-enabled
 ```
 
-Next, create a uWSGI configuration file at `/etc/uwsgi/apps-available/<projectname>.ini` following this template (you may need to create the `uwsgi` and `apps-available` folders first):
+Next, create a uWSGI configuration file at `/etc/uwsgi/apps-available/<projectname>.ini` following this template. Again, if your project is already in production, copy and edit the production config file.
 
 ```
 [uwsgi]
@@ -286,14 +288,19 @@ threads = 2
 Create a symlink to this file in the `apps-enabled` directory.
 
 ```
-$ sudo mkdir /etc/uwsgi/apps-enabled
-$ ln -s /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled
+$ ln -s /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled/<projectname>.ini
 ```
 
 Make sure that root is the owner of all the configuration files:
 
 ```
 $ sudo chown root:root /etc/nginx/sites-available/<projectname> /etc/nginx/sites-enabled/<projectname> /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled/<projectname>.ini
+```
+
+Make sure that `www-data` is the owner of your project files:
+
+```
+$ sudo chown -R www-data:www-data /srv/<projectname>
 ```
 
 Restart Nginx and uWSGI:
@@ -303,7 +310,10 @@ $ sudo service nginx restart
 $ sudo service uwsgi restart
 ```
 
+Your website should now be up and running! If it isn't (and it probably isn't), check the uWSGI and Nginx logs at `/var/log/uwsgi/` and `/var/log/nginx/`, respectively. There are a couple of things that you can try.
 
+- Delete the `/etc/nginx/apps-available/default` file and its symlink, `/etc/nginx/apps-enabled/default`.
+- Change `ALLOWED_HOSTS` in your Django `settings.py` file to match the URL or IP address of your server. This is only necessary if `DEBUG` is set to `False`.
 
 ## Appendix A - Other Resources
 
@@ -313,6 +323,8 @@ Many of these resources were used to prepare this tutorial and can be consulted 
 - [Setting up Django and your web server with uWSGI and nginx](http://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 - [PostgreSQL on Ubuntu](https://help.ubuntu.com/community/PostgreSQL)
 - [Setting up PostgreSQL with Python 3 and psycopg on Ubuntu 16.04](https://www.fullstackpython.com/blog/postgresql-python-3-psycopg2-ubuntu-1604.html)
+- [How To Use PostgreSQL with your Django Application on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04)
+- [lxml Installation](http://lxml.de/installation.html)
 
 ## Appendix B - Common Unix Commands
 
