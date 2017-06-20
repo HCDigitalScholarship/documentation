@@ -11,6 +11,6 @@ And answer `yes` at the prompt.
 
 Now we'll download Fuseki from a link at https://jena.apache.org/download/#jena-fuseki, and unpack it in the `/opt/` folder
 
-`$ cd /opt`  
-`$ sudo wget http://supergsego.com/apache/jena/binaries/apache-jena-fuseki-2.6.0.tar.gz`  
-`$ sudo tar -xvf apache-jena-fuseki-2.6.0.tar.gz .`
+`$ cd /opt  
+$ sudo wget http://supergsego.com/apache/jena/binaries/apache-jena-fuseki-2.6.0.tar.gz  
+$ sudo tar -xvf apache-jena-fuseki-2.6.0.tar.gz .`
