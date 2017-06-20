@@ -24,6 +24,25 @@ Next, we must create a context root to point the Tomcat web application server t
 
 Past the following into the newly created file:
 
-`<Context docBase="/opt/apache-jena-fuseki-2.5.0/fuseki.war"
-`         antiResourceLocking="false"
- `        swallowOutput="true" />`
+    <Context docBase="/opt/apache-jena-fuseki-2.5.0/fuseki.war"
+        antiResourceLocking="false"
+        swallowOutput="true" />
+
+The `docBase` path should match the path to `fuseki.war` in the Fuseki server distribution we downloaded earlier. 
+
+Now, we need to point the app to Java 8, which we installed earlier, not the default version packaged with Ubuntu.
+
+`$ vi /etc/default/tomcat7`
+
+Around line 12, you should see the JAVA_HOME variable being set to Java 8, but it will be commented out. Uncomment the line so it reads:
+
+`JAVA_HOME=/usr/lib/jvm/java-8-oracle`
+
+Save and quit. Then, restart Tomcat.
+
+`sudo service tomcat7 restart`
+
+
+
+`$ sudo service tomcat7 restart`
+
