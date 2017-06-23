@@ -24,7 +24,7 @@ Next, we must create a context root to point the Tomcat web application server t
 
 Past the following into the newly created file:
 
-    <Context docBase="/opt/apache-jena-fuseki-2.5.0/fuseki.war"
+    <Context docBase="/opt/apache-jena-fuseki-2.6.0/fuseki.war"
         antiResourceLocking="false"
         swallowOutput="true" />
 
@@ -38,6 +38,19 @@ Around line 12, you should see the JAVA_HOME variable being set to Java 8, but i
 
     JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
+Also, add the following lines at the bottom of the file to set the FUSEKI_HOME and FUSEKI_BASE environment variables:
+
+    FUSEKI_HOME=/opt/apache-jena-fuseki-2.6.0/
+    FUSEKI_BASE=/opt/apache-jena-fuseki-2.6.0/run/ 
+
 Save and quit. Then, restart Tomcat.
 
     $ sudo service tomcat7 restart
+
+You should now be able to access the Fuseki server main page at http://server.name:8080/fuseki-server. It's _possible_ that some interactivity in the web interface will not work (e.g. adding a dataset, uploading a file). If that's the case, check the browser's console. If there is a 403 (Forbidden) error for the `/$/server` path, you'll need to update some settings in the `/opt/apache-jena-fuseki-2.6.0/shiro.ini` file, which controls security for the SPARQL endpoint. Look at the lines in the `[urls]` block to adjust security settings. It is best practice to implement password protection on your webapp, but to enable basic functionality with this error, you'll need to comment out the line that reads:
+
+    /$/** = localhostFilter
+    
+And uncomment the line underneath the comment that reads `## or to allow any access` so that it reads:
+
+    /$/** = anon
