@@ -54,3 +54,5 @@ You should now be able to access the Fuseki server main page at http://server.na
 And uncomment the line underneath the comment that reads `## or to allow any access` so that it reads:
 
     /$/** = anon
+
+and restart the Tomcat service again.
