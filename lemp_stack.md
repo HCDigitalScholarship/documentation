@@ -135,7 +135,10 @@ $ sudo apt-get install python3-pip
 
 Some packages need additional setup. You should only follow these steps if your project requires these packages.
 
-### psycopg2
+### Additional optional packages
+These packages may or may not be required for your package. If in doubt, consult a DS librarian.
+
+#### psycopg2
 
 The `psycopg2` is a Python interface for communicating with PostgreSQL databases. It has several prerequisites that need to be installed:
 
@@ -143,7 +146,7 @@ The `psycopg2` is a Python interface for communicating with PostgreSQL databases
 $ sudo apt-get install libpq-dev build-essential postgresql-server-dev-all
 ```
 
-### lxml
+#### lxml
 
 The lxml package is used for XML parsing. Installing it on Ubuntu is tricky. You'll need the following packages:
 
