@@ -85,13 +85,13 @@ $ sudo mysql_secure_installation
 The second script will give you several prompts to remove unsafe defaults: press enter for all of them.
 
 Your MySQL installation is now complete! You'll still need to set up a database for your application.<br>
-For a helpful tutorial on MySQl, see [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).<br>
+For a helpful tutorial on MySQL, see [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).<br>
 <br>
 To create a new database and user for your project, log in to the MySQL shell by typing `$ mysql -u root -p`.  In the shell:
 
 ```
 > CREATE DATABASE <database-name>;
-> CREATE USER '<user_name>'@'localhost' WITH PASSWORD '<password>';
+> CREATE USER '<user_name>'@'localhost' IDENTIFIED BY '<password>';
 > GRANT ALL PRIVILEGES ON * . * TO '<user_name>'@'localhost';
 > FLUSH PRIVILEGES;
 ```
