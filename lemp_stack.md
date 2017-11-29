@@ -84,9 +84,9 @@ $ sudo mysql_secure_installation
 
 The second script will give you several prompts to remove unsafe defaults: press enter for all of them.
 
-Your MySQL installation is now complete! You'll still need to set up a database for your application.<br>
-For a helpful tutorial on MySQL, see [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).<br>
+For a helpful tutorial on MySQL, see .<br>
 <br>
+
 To create a new database and user for your project, log in to the MySQL shell by typing `$ mysql -u root -p`.  In the shell:
 
 ```
@@ -94,6 +94,12 @@ To create a new database and user for your project, log in to the MySQL shell by
 > CREATE USER '<user_name>'@'localhost' IDENTIFIED BY '<password>';
 > GRANT ALL PRIVILEGES ON * . * TO '<user_name>'@'localhost';
 > FLUSH PRIVILEGES;
+```
+
+Finally, if you are using Python, you'll need some MySQL headers:
+
+```
+$ sudo apt-get install libmysqlclient-dev
 ```
 
 ### PostgreSQL
@@ -325,7 +331,7 @@ $ sudo service uwsgi restart
 
 Your website should now be up and running! If it isn't (and it probably isn't), check the uWSGI and Nginx logs at `/var/log/uwsgi/` and `/var/log/nginx/`, respectively. There are a couple of things that you can try.
 
-- Delete the `/etc/nginx/apps-available/default` file and its symlink, `/etc/nginx/apps-enabled/default`.
+- Delete the `/etc/nginx/sites-enabled/default` file.
 - Change `ALLOWED_HOSTS` in your Django `settings.py` file to match the URL or IP address of your server. This is only necessary if `DEBUG` is set to `False`.
 
 ## Appendix A - Other Resources
@@ -338,6 +344,7 @@ Many of these resources were used to prepare this tutorial and can be consulted 
 - [Setting up PostgreSQL with Python 3 and psycopg on Ubuntu 16.04](https://www.fullstackpython.com/blog/postgresql-python-3-psycopg2-ubuntu-1604.html)
 - [How To Use PostgreSQL with your Django Application on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04)
 - [lxml Installation](http://lxml.de/installation.html)
+- [How to Create a New User and Grant Permissions in MySQL](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql)
 
 ## Appendix B - Common Unix Commands
 
