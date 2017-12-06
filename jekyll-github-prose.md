@@ -4,6 +4,8 @@ Install ruby and jekyll, resolve dependencies
 
 Create the Jekyll site, and initialize as a git repository
 
+Create webhook
+
 Push to a remote
 
 Install node.js and npm (Node Package Manager)
