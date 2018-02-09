@@ -249,6 +249,8 @@ Install uWSGI with
 
 ```
 $ sudo apt-get install uwsgi uwsgi-plugin-python
+OR, for Python 3
+$ sudo apt-get install uwsgi uwsgi-plugin-python3
 ```
 
 Copy [this file](https://raw.githubusercontent.com/nginx/nginx/master/conf/uwsgi_params) into your root project directory and name it `uwsgi_params`. If you save it on your local computer you can copy it like this (running this command locally):
