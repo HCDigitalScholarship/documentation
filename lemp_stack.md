@@ -324,9 +324,11 @@ Make sure that `www-data` is the owner of your project files:
 $ sudo chown -R www-data:www-data /srv/<projectname>
 ```
 
-Optionally you can grant write access to all members of `www-data` without requiring them to use sudo:
+Optionally you can then grant write access to all members of `www-data` without requiring them to use sudo:
 
-`sudo chmod -R g+w /srv/<projectname>`
+```
+$ sudo chmod -R g+w /srv/<projectname>
+```
 
 Restart Nginx and uWSGI:
 
