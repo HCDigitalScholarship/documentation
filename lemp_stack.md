@@ -253,19 +253,8 @@ OR, for Python 3
 $ sudo apt-get install uwsgi uwsgi-plugin-python3
 ```
 
-Copy [this file](https://raw.githubusercontent.com/nginx/nginx/master/conf/uwsgi_params) into your root project directory and name it `uwsgi_params`. If you save it on your local computer you can copy it like this (running this command locally):
 
-```
-$ scp uwsgi_params <username>@<servername>:/tmp/
-```
-
-And then back on the server:
-
-```
-$ sudo mv /tmp/uwsgi_params <project-directory>
-```
-
-Now, using the same process, copy this file to `/etc/nginx/sites-available/<projectname>`, editing it to insert your project-specific information. If you're setting up a new server for a project that is already in production, you're probably better off copying the configuration file from the production server and making any necessary changes.
+Now, copy this file to `/etc/nginx/sites-available/<projectname>`, editing it to insert your project-specific information. If you're setting up a new server for a project that is already in production, you're probably better off copying the configuration file from the production server and making any necessary changes.
 
 ```
 server {
@@ -277,7 +266,7 @@ server {
 
     location / {
         uwsgi_pass  unix:/run/uwsgi/app/<projectname>/<projectname>.socket;
-        include     /srv/<projectname>/uwsgi_params;
+        include     /etc/nginx/uwsgi_params;
     }
 }
 ```
