@@ -33,7 +33,6 @@ import spacy
 nlp = spacy.load('/home/digitalscholarship/Projects/spaCy/models')
 
 with open('/home/digitalscholarship/Projects/spaCy/gam_text.txt', 'r') as f:
-        import spacy
         nlp =spacy.load('/home/digitalscholarship/Projects/spaCy/models')
         doc = nlp(u'{}'.format(f.read()))
         for ent in doc.ents:
