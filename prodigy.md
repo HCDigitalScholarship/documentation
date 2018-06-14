@@ -17,17 +17,17 @@ https://support.prodi.gy/t/train-a-new-ner-entity-with-multi-word-tokens/227/2
 ## Load the UI to generate training data 
 `prodigy ner.teach gam es_core_news_md gam_text.txt --patterns nombre_PATTERNS.JSONL --label NOMBRE`
 
-# Save with either the little disk icon in Prodigy or ctrl-C
+## Save with either the little disk icon in Prodigy or ctrl-C
 ```
 Saved 890 annotations to database SQLite
 Dataset: gam
 Session ID: 2018-06-14_03-39-15`
 ```
 
-# Train the model on the new category (this one is for 100 iterations)
+## Train the model on the new category (this one is for 100 iterations)
 `prodigy ner.batch-train gam es_core_news_md -n 100 --output /home/digitalscholarship/Projects/spaCy/models --label NOMBRE`
 
-# Run inference for category NOMBRE
+## Run inference for category NOMBRE
 ```python
 import spacy
 nlp = spacy.load('/home/digitalscholarship/Projects/spaCy/models')
