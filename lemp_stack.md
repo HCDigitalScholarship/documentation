@@ -229,7 +229,8 @@ OR, if using Python 3
 $ pip3 install -r requirements.txt
 ```
 
-If you get an error, it is most likely because you forgot to switch to root. Don't run it again with `sudo`; follow the steps above to make sure that your virtualenv is properly activated in root mode.
+If you get an error, it is most likely because you forgot to switch to root. Don't run it again with `sudo`; follow the steps above to make sure that your virtualenv is properly activated in root mode.<br/>
+If you get wired errors, also try to upgrade your `pip` by running `pip install --upgrade pip`
 
 The git repo you cloned probably didn't contain a `settings.py` file, for security reasons. You'll need to copy this from wherever you were developing previously. The exact location depends on your project's setup, but, for a project `foo`, it would typically go in either `foo/foo/settings.py` or `foo/settings.py`. You also may need to change the `DATABASES` variable in the settings file. If you are setting up a production server, make sure `DEBUG` is set to `False`.
 
