@@ -210,7 +210,28 @@ $ sudo virtualenv <projectname> --python=<your Python version>
 
 Make sure to supply `virtualenv` with the version of Python you want to be using. Usually this will be `--python=python2.7` for Python 2 or `--python=python3.4` for Python 3.
 
-Unfortunately, virtualenv does not play nicely with the Unix permissions system. If you have your virtualenv activated and you run a command with `sudo`, the virtualenv won't apply for that command. Usually the only time you need to activate your virtualenv is to run `manage.py` (you can edit files and restart the server without needing the virtualenv) and to install new Python packages. Here's how you can do that:
+**Notes: If the last command line does not work, try this:**  
+*On macOS and Linux:*
+```
+$ sudo python3 -m virtualenv <projectname>
+```
+*On Windows:*
+```
+$ sudo py -m virtualenv <projectname>
+```
+***
+Then you may activate your virtualenv. 
+
+*On macOS and Linux:*
+```
+$ source <projectname>/bin/activate
+```
+*On Windows:*
+```
+$ .\<projectname>\Scripts\activate
+```
+
+**Notes:** Unfortunately, virtualenv does not play nicely with the Unix permissions system. If you have your virtualenv activated and you run a command with `sudo`, the virtualenv won't apply for that command. Usually the only time you need to activate your virtualenv is to run `manage.py` (you can edit files and restart the server without needing the virtualenv) and to install new Python packages. Here's how you can do that:
 
 ```
 $ sudo su
@@ -220,8 +241,13 @@ $ exit
 ```
 
 The `sudo su` command makes you the root user. This is as dangerous as running every command with `sudo`, so only do what you absolutely need to and type `exit` (this exits from the root user, not from the SSH connection) as soon as you're done.
+***
 
-Activate your virtualenv as explained above, and then navigate to the root of your project directory (that you just cloned from GitHub). There should be a file named `requirements.txt` that contains a list of all packages that your website needs. Do
+Activate your virtualenv as explained above, and then navigate to the root of your project directory (that you just cloned from GitHub). 
+```
+$ cd /srv/<your-project-name>/
+```
+There should be a file named `requirements.txt` that contains a list of all packages that your website needs. Do
 
 ```
 $ pip install -r requirements.txt
@@ -254,43 +280,19 @@ OR, for Python 3
 $ sudo apt-get install uwsgi uwsgi-plugin-python3
 ```
 
-
-Now, copy this file to `/etc/nginx/sites-available/<projectname>`, editing it to insert your project-specific information. If you're setting up a new server for a project that is already in production, you're probably better off copying the configuration file from the production server and making any necessary changes.
-
-```
-server {
-    listen 80;
-
-    location /static {
-        alias /path/to/your/mysite/static;
-    }
-
-    location / {
-        uwsgi_pass  unix:/run/uwsgi/app/<projectname>/<projectname>.socket;
-        include     /etc/nginx/uwsgi_params;
-    }
-}
-```
-
-Now you want to symlink this file to the `sites-enabled` directory.
-
-```
-$ ln -s /etc/nginx/sites-available/<projectname>  /etc/nginx/sites-enabled
-```
-
-Next, create a uWSGI configuration file at `/etc/uwsgi/apps-available/<projectname>.ini` following this template. Again, if your project is already in production, copy and edit the production config file.
+First, create a uWSGI configuration file at `/etc/uwsgi/apps-available/<projectname>.ini` following this template. Again, if your project is already in production, copy and edit the production config file.
 
 ```
 [uwsgi]
 
 uid = www-data
 gid = www-data
-socket = /run/uwsgi/app/<projectname>/<projectname>.socket
+socket = /run/uwsgi/app/<projectname>/<projectname>.socket  // you define a socket here
 
 plugins = python # or python3
-chdir = <your project directory>
+chdir = /path/to/your/project/root/directory
 virtualenv = /usr/local/lib/python-virtualenv/<projectname>
-module = <projectname>.wsgi:application
+module = <projectname>.wsgi:application  // look at settings.py and see how WSGI_APPLICATION is defined
 
 processes = 4
 threads = 2
@@ -299,8 +301,33 @@ threads = 2
 Create a symlink to this file in the `apps-enabled` directory.
 
 ```
-$ ln -s /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled/<projectname>.ini
+$ sudo ln -s /etc/uwsgi/apps-available/<projectname>.ini /etc/uwsgi/apps-enabled/<projectname>.ini
 ```
+
+Then, copy this file to `/etc/nginx/sites-available/<projectname>`, editing it to insert your project-specific information. If you're setting up a new server for a project that is already in production, you're probably better off copying the configuration file from the production server and making any necessary changes.
+
+```
+server {
+    listen 80;
+
+    location /static {
+        alias /path/to/your/static/directory;
+    }
+
+    location / {
+        uwsgi_pass  unix:/run/uwsgi/app/<projectname>/<projectname>.socket; 
+                // should be the same as the socket you just defined in the previous file
+        include     /etc/nginx/uwsgi_params;
+    }
+}
+```
+
+Now you want to symlink this file to the `sites-enabled` directory.
+
+```
+$ sudo ln -s /etc/nginx/sites-available/<projectname>  /etc/nginx/sites-enabled
+```
+
 
 Make sure that root is the owner of all the configuration files:
 
