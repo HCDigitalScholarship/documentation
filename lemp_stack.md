@@ -316,7 +316,7 @@ server {
 
     location / {
         uwsgi_pass  unix:/run/uwsgi/app/<projectname>/<projectname>.socket; 
-                // should be the same as the socket you just defined in the previous file
+                # should be the same as the socket you just defined in the previous file
         include     /etc/nginx/uwsgi_params;
     }
 }
