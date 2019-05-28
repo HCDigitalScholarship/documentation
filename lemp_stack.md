@@ -284,15 +284,24 @@ First, create a uWSGI configuration file at `/etc/uwsgi/apps-available/<projectn
 
 ```
 [uwsgi]
-
+# NOTE: no in-line comments
+# comments are only valid with '#' in front on their OWN LINE!
 uid = www-data
 gid = www-data
-socket = /run/uwsgi/app/<projectname>/<projectname>.socket  // you define a socket here
+# socket = localhost:5000                                                                               
+# protocol = http      
+# you can use the above two lines (creting an http socket) to test the configuration
+# $ curl <socket>
+# if you run this command and get an HTML response the configuration is good.
+# then comment out the socket and protocol lines and use the line below
+socket = /run/uwsgi/app/<projectname>/<projectname>.socket  
+# you define a socket here
 
 plugins = python # or python3
 chdir = /path/to/your/project/root/directory
 virtualenv = /usr/local/lib/python-virtualenv/<projectname>
-module = <projectname>.wsgi:application  // look at settings.py and see how WSGI_APPLICATION is defined
+module = <projectname>.wsgi:application  
+# look at settings.py and see how WSGI_APPLICATION is defined
 
 processes = 4
 threads = 2
