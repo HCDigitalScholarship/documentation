@@ -290,10 +290,10 @@ uid = www-data
 gid = www-data
 # socket = localhost:5000                                                                               
 # protocol = http      
-# you can use the above two lines (creting an http socket) to test the configuration
-# $ curl <socket>
-# if you run this command and get an HTML response the configuration is good.
-# then comment out the socket and protocol lines and use the line below
+# You can use the above two lines (creating an http socket) to test the configuration.
+# $ curl localhost:5000 
+# If you run this command and get an HTML response, then the configuration is good.
+# Now comment out the socket and protocol lines and use the line below:
 socket = /run/uwsgi/app/<projectname>/<projectname>.socket  
 # you define a socket here
 
