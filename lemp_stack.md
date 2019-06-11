@@ -78,7 +78,6 @@ $ sudo apt-get install mysql-server
 This will prompt you to create a root password. Choose whatever you like, but make sure to write it down somewhere. After installation, you'll need to run some configuration scripts.
 
 ```
-$ sudo mysql_install_db
 $ sudo mysql_secure_installation
 ```
 
