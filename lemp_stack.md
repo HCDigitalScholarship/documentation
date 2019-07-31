@@ -309,6 +309,22 @@ processes = 4
 threads = 2
 ```
 
+Uncommented version of the above code:
+```
+[uwsgi]
+uid = www-data
+gid = www-data
+socket = /run/uwsgi/app/<projectname>/<projectname>.socket  
+
+plugins = python3
+chdir = /path/to/your/project/root/directory
+virtualenv = /usr/local/lib/python-virtualenv/<projectname>
+module = <projectname>.wsgi:application  
+
+processes = 4
+threads = 2
+```
+
 Create a symlink to this file in the `apps-enabled` directory.
 
 ```
